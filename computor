@@ -1,8 +1,17 @@
 import sys
-
 from math import sqrt
+
 def abs(nbr):
+    print(nbr)
     return nbr if nbr >= 0 else -nbr
+
+def addint(equat, index, sign, content):
+    nbr = ''
+    while index < len(equat) and (equat[index].isdigit() or equat[index] == '.' or equat[index] == ','):
+        nbr += equat[index]
+        index += 1
+    content.append(float(nbr) if sign == 0 else -float(nbr))
+    return len(nbr)
 
 def parser(equat):
     sign = 0
@@ -12,7 +21,24 @@ def parser(equat):
         if equat[index] == '=':
             content.append('=')
         if equat[index] == '+' or equat[index] == '-':
-            i = 0
+            sign = 1 if equat[index] == '+' else 0
+        if equat[index].isdigit():
+            index += addint(equat, index, sign, content)
+        else:
+            index += 1
+    return content
+
+def contentToTab(content):
+    eqTab = {0: 0, 1: 0, 2: 0}
+    index = 0
+    while index < len(content) and content[index] != '=':
+        eqTab[abs(content[index + 1])] = content[index]
+        index += 2
+    index += 1
+    while index < len(content):
+        eqTab[abs(content[index + 1])] -= content[index]
+        index += 2
+    return eqTab
 
 str = ''
 
@@ -26,11 +52,17 @@ equat = "5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0"
 equat = equat.replace(' ', '')
 
 content = parser(equat)
+print(content)
+eqTab = contentToTab(content)
 
-if content is None:
+for key, value in eqTab:
+    if key != 0 and key != 1 and key != 2:
+        print("The polynomial degree is not between 0 and 2, I can't solve.")
+
+if len(eqTab) > 3:
     print('err')
     raise SyntaxError('Input syntaxe error')
 
 
 
-print(equat)
+print(eqTab)

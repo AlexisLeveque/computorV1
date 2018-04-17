@@ -1,0 +1,36 @@
+import sys
+
+from math import sqrt
+def abs(nbr):
+    return nbr if nbr >= 0 else -nbr
+
+def parser(equat):
+    sign = 0
+    index = 0
+    content = []
+    while index < len(equat):
+        if equat[index] == '=':
+            content.append('=')
+        if equat[index] == '+' or equat[index] == '-':
+            i = 0
+
+str = ''
+
+if len(sys.argv) >= 2:
+    equat = sys.argv[1]
+# else:
+#     equat = input('Enter a polynomial : ')
+
+equat = "5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0"
+
+equat = equat.replace(' ', '')
+
+content = parser(equat)
+
+if content is None:
+    print('err')
+    raise SyntaxError('Input syntaxe error')
+
+
+
+print(equat)

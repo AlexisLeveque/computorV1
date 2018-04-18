@@ -1,9 +1,8 @@
 import sys
-from math import sqrt
+from sqrt import ftSqrt
+from calculs import ftAbs, reducedForm
 
-def abs(nbr):
-    print(nbr)
-    return nbr if nbr >= 0 else -nbr
+
 
 def addint(equat, index, sign, content):
     nbr = ''
@@ -32,22 +31,21 @@ def contentToTab(content):
     eqTab = {0: 0, 1: 0, 2: 0}
     index = 0
     while index < len(content) and content[index] != '=':
-        eqTab[abs(content[index + 1])] = content[index]
+        eqTab[ftAbs(content[index + 1])] = content[index]
         index += 2
     index += 1
     while index < len(content):
-        eqTab[abs(content[index + 1])] -= content[index]
+        eqTab[ftAbs(content[index + 1])] -= content[index]
         index += 2
     return eqTab
 
-str = ''
 
 if len(sys.argv) >= 2:
     equat = sys.argv[1]
 # else:
 #     equat = input('Enter a polynomial : ')
 
-equat = "5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0"
+equat = "5 * X^0 + 4 * X^1 - 10 * X^2 = 1 * X^0" #only for test purpose
 
 equat = equat.replace(' ', '')
 
@@ -55,14 +53,19 @@ content = parser(equat)
 print(content)
 eqTab = contentToTab(content)
 
-for key, value in eqTab:
+for key, value in eqTab.items():
     if key != 0 and key != 1 and key != 2:
         print("The polynomial degree is not between 0 and 2, I can't solve.")
 
-if len(eqTab) > 3:
-    print('err')
-    raise SyntaxError('Input syntaxe error')
+eqTab = reducedForm(eqTab)
 
 
 
+delta = eqTab[1] * eqTab[1] - 4 * eqTab[2] * eqTab[0]
+
+# if delta > 0:
+#     r1 = -eqTab[1]
+
+
+print(delta)
 print(eqTab)

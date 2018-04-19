@@ -1,5 +1,4 @@
 import sys
-from sqrt import ftSqrt
 from calculs import ftAbs, reducedForm, degree
 
 
@@ -63,7 +62,5 @@ eqTab = reducedForm(eqTab)
 print(eqTab)
 degree(eqTab)
 
-# if delta > 0:
-#     r1 = -eqTab[1]
 
 

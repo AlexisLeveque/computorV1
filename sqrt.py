@@ -1,4 +1,3 @@
-from math import sqrt
 
 def guessCloseNbr(nbr):
     guess = round(nbr / 2)

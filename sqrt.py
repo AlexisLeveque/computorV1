@@ -4,7 +4,7 @@ def guessCloseNbr(nbr):
     guess = round(nbr / 2)
     while guess * guess > nbr:
         guess -= 1
-    return guess
+    return guess if guess != 0 else 1
 
 def betterApprox(nbr, approx):
     return (approx + nbr/approx)/2

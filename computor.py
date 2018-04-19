@@ -1,6 +1,6 @@
 import sys
 from sqrt import ftSqrt
-from calculs import ftAbs, reducedForm
+from calculs import ftAbs, reducedForm, degree
 
 
 
@@ -9,11 +9,11 @@ def addint(equat, index, sign, content):
     while index < len(equat) and (equat[index].isdigit() or equat[index] == '.' or equat[index] == ','):
         nbr += equat[index]
         index += 1
-    content.append(float(nbr) if sign == 0 else -float(nbr))
+    content.append(float(nbr) if sign == 1 else -float(nbr))
     return len(nbr)
 
 def parser(equat):
-    sign = 0
+    sign = 1
     index = 0
     content = []
     while index < len(equat):
@@ -45,7 +45,7 @@ if len(sys.argv) >= 2:
 # else:
 #     equat = input('Enter a polynomial : ')
 
-equat = "5 * X^0 + 4 * X^1 - 10 * X^2 = 1 * X^0" #only for test purpose
+equat = "2 * X^2 + 4 * X^1 - 10 * X^0 = 0 * X^0" #only for test purpose
 
 equat = equat.replace(' ', '')
 
@@ -53,19 +53,17 @@ content = parser(equat)
 print(content)
 eqTab = contentToTab(content)
 
+print(eqTab)
+
 for key, value in eqTab.items():
     if key != 0 and key != 1 and key != 2:
         print("The polynomial degree is not between 0 and 2, I can't solve.")
 
 eqTab = reducedForm(eqTab)
-
-
-
-delta = eqTab[1] * eqTab[1] - 4 * eqTab[2] * eqTab[0]
+print(eqTab)
+degree(eqTab)
 
 # if delta > 0:
 #     r1 = -eqTab[1]
 
 
-print(delta)
-print(eqTab)

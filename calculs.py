@@ -14,38 +14,41 @@ def reducedForm(eqTab):
     return eqTab
 
 def second_degree(eqTab):
-    print(eqTab)
     delta = eqTab[1] * eqTab[1] - 4 * eqTab[2] * eqTab[0]
+    print("\033[94mPolynomial degree: 2\033[0m")
+    print("\033[94mdelta =", delta, "\033[0m")
     if delta > 0:  #x1 = (-b-√Δ)/(2a) et x2= (-b+√Δ)/(2a)
-        r1 = (-eqTab[1] + ftSqrt(delta))/2 * eqTab[2]
-        r2 = (-eqTab[1] - ftSqrt(delta))/2 * eqTab[2]
-        print("Discriminant is strictly positive, the two solutions are:")
-        print("r1 : ", r1)
-        print("r2 : ", r2)
+        r1 = (-eqTab[1] + ftSqrt(delta))/(2 * eqTab[2])
+        r2 = (-eqTab[1] - ftSqrt(delta))/(2 * eqTab[2])
+        print("\033[92mDiscriminant is strictly positive, the two solutions are:\033[0m")
+        print("\033[93mr1 : ", r1, "\033[0m")
+        print("\033[93mr2 : ", r2, "\033[0m")
     elif delta == 0:  #-b/(2a)
         r = -eqTab[1]/(2 * eqTab[2])
-        print("Discriminant is strictly equal to 0 , the solution is:")
-        print("r : ", r)
-    else:
-        r1 = (-eqTab[1] )/2 * eqTab[2]
-        r1i = (+ ftSqrt(-delta))/2 * eqTab[2]
-        r2 = (-eqTab[1])/2 * eqTab[2]
-        r2i = (- ftSqrt(-delta))/2 * eqTab[2]
-        print("Discriminant is strictly negative, the two solutions are:")
-        print("r1 : ", r1, "+ i *", r1i)
-        print("r2 : ", r2, "- i *", r2i)
+        print("\033[92mDiscriminant is strictly equal to 0 , the solution is:\033[0m")
+        print("\033[93mr : ", r, "\033[0m")
+    else: #x1 = (-b-i√Δ)/(2a) et x2= (-b+i√Δ)/(2a)
+        r1 = (-eqTab[1] )/(2 * eqTab[2])
+        r1i = (+ ftSqrt(-delta))/(2 * eqTab[2])
+        r2 = (-eqTab[1])/(2 * eqTab[2])
+        r2i = (- ftSqrt(-delta))/(2 * eqTab[2])
+        print("\033[92mDiscriminant is strictly negative, the two solutions are:\033[0m")
+        print("\033[93mr1 : ", r1, "+ i *", r1i, "\033[0m")
+        print("\033[93mr2 : ", r2, "- i *", r2i, "\033[0m")
 
 def first_degree(eqTab):
+    print("\033[94mPolynomial degree: 1\033[0m")
     if eqTab[0] == 0:
-        print("The result is x = 0")
+        print("\033[92mThe solution is \033[93mx = 0\033[0m")
     else:
-        print("The result is x = ", round(eqTab[0]/eqTab[1], 4))
+        print("\033[92mThe solution is\033[93m x = ", -eqTab[0]/eqTab[1], "\033[0m")
 
 def simple(eqTab):
+    print("\033[94mPolynomial degree: 0\033[0m")
     if eqTab[0] == 0:
-        print("Every real are solution")
+        print("\033[92mEvery real are solution\033[0m")
     else:
-        print("No solution")
+        print("\033[92mNo solution\033[0m")
 
 def degree(eqTab):
     if eqTab[2] == 0 and eqTab[1] == 0:

@@ -1,7 +1,13 @@
 import sys
+import re
 from calculs import ftAbs, reducedForm, degree
 
-
+def isEquat(equat):
+    regex = "(\+?\-?[0-9.]+\*[Xx]\^[0-9]+)+=(\+?\-?[0-9.]+\*[Xx]\^[0-9]+)+"
+    match = re.search(regex, equat)
+    if match is None or match.group(0) != equat:
+        print('\033[91mError: Syntaxe error\033[0m')
+        sys.exit()
 
 def addint(equat, index, sign, content):
     nbr = ''
@@ -18,6 +24,7 @@ def parser(equat):
     while index < len(equat):
         if equat[index] == '=':
             content.append('=')
+            sign = 1
         if equat[index] == '+' or equat[index] == '-':
             sign = 1 if equat[index] == '+' else 0
         if equat[index].isdigit():
@@ -41,26 +48,38 @@ def contentToTab(content):
 
 if len(sys.argv) >= 2:
     equat = sys.argv[1]
-# else:
-#     equat = input('Enter a polynomial : ')
-
-equat = "2 * X^2 + 4 * X^1 - 10 * X^0 = 0 * X^0" #only for test purpose
+else:
+    equat = input('Enter a polynomial : ')
 
 equat = equat.replace(' ', '')
 
-content = parser(equat)
-print(content)
-eqTab = contentToTab(content)
+isEquat(equat)
 
-print(eqTab)
+content = parser(equat)
+eqTab = contentToTab(content)
 
 for key, value in eqTab.items():
     if key != 0 and key != 1 and key != 2:
-        print("The polynomial degree is not between 0 and 2, I can't solve.")
+        print("\033[94mPolynomial degree:", round(key), "\033[0m")
+        print("\033[91mError : The polynomial degree is stricly greater than 2, I can't solve.\033[0m")
+        sys.exit()
 
 eqTab = reducedForm(eqTab)
-print(eqTab)
+rForm = "\033[95mReduced form: "
+if eqTab[0] != 0:
+    rForm += "- " if eqTab[0] < 0 else ""
+    rForm += str(round(ftAbs(eqTab[0])) if ftAbs(eqTab[0]) % 1 == 0 else ftAbs(eqTab[0]))
+    rForm += " * X^0 "
+if eqTab[1] != 0:
+    rForm += "+ " if eqTab[1] > 0 else "- "
+    rForm += str(round(ftAbs(eqTab[1])) if ftAbs(eqTab[1]) % 1 == 0 else ftAbs(eqTab[1]))
+    rForm += " * X^1 "
+if eqTab[2] != 0:
+    rForm += "+ " if eqTab[2] > 0 else "- "
+    rForm += str(round(ftAbs(eqTab[2])) if ftAbs(eqTab[2]) % 1 == 0 else ftAbs(eqTab[2]))
+    rForm += " * X^2 "
+rForm += "= 0\033[0m"
+
+print(rForm)
 degree(eqTab)
-
-
 

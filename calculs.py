@@ -8,6 +8,10 @@ def ft_abs(nbr):
 
 def reduced_form(eq_tab):
     div = ft_abs(eq_tab[0])
+    if eq_tab[0] < 0 and eq_tab[1] < 0 and eq_tab[2] < 0:
+        eq_tab[0] *= -1
+        eq_tab[1] *= -1
+        eq_tab[2] *= -1
     while div > 1 and (eq_tab[0] % div != 0 or eq_tab[1] % div != 0 or eq_tab[2] % div != 0):
         div -= 1
     if div > 1:
